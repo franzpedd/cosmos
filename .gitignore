@@ -1,0 +1,13 @@
+
+# Folders
+.vs/
+.vscode/
+_Build/
+Thirdparty/premake5
+
+# Extensions
+*.sln
+*.log
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
