@@ -7,6 +7,10 @@
 #include "Core/Renderer.h"
 #include "Core/Window.h"
 
+#include "Scene/Components.h"
+#include "Scene/Entity.h"
+#include "Scene/World.h"
+
 #include "UI/GUI.h"
 #include "UI/Icons.h"
 #include "UI/Images.h"
@@ -14,3 +18,9 @@
 
 #include "Util/Clock.h"
 #include "Util/Container.h"
+#include "Util/Datafile.h"
+#include "Util/ID.h"
+#include "Util/Library.h"
+
+// thirdparty
+#include <imgui/imgui.h>

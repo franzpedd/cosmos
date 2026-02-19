@@ -17,6 +17,8 @@
 #include <font/awesome/awesome.c>
 #include <font/roboto/robotomono.c>
 
+IMGUI_API ImGuiContext* GImGui = nullptr; // this is because of imgui
+static ImGuiContext* g_Context = nullptr;
 static ImFont* g_IconFA = nullptr;
 static ImFont* g_IconLC = nullptr;
 static ImFont* g_RobotoMono = nullptr;
@@ -35,7 +37,7 @@ namespace Cosmos
 	{
 		// initial config
 		IMGUI_CHECKVERSION();
-		mContext = ImGui::CreateContext();
+		g_Context = ImGui::CreateContext();
 
 		// io config
 		ImGuiIO& io = ImGui::GetIO();
@@ -61,7 +63,7 @@ namespace Cosmos
 		ImGui::StyleColorsClassic();
 		
 		// SDL and Vulkan
-		ImGui::SetCurrentContext((ImGuiContext*)mContext);
+		ImGui::SetCurrentContext(g_Context);
 		ImGui_ImplSDL3_InitForVulkan(mApp->GetWindow()->GetNativeWindow());
 
 		evkUIRenderphase* renderphase = (evkUIRenderphase*)evk_get_renderphase(evk_Renderphase_Type_UI);
@@ -125,7 +127,12 @@ namespace Cosmos
 		mWidgets.Clear();
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplSDL3_Shutdown();
-		ImGui::DestroyContext((ImGuiContext*)mContext);
+		ImGui::DestroyContext(g_Context);
+	}
+
+	void* GUI::GetImGuiContext()
+	{
+		return g_Context;
 	}
 
 	void GUI::Update()

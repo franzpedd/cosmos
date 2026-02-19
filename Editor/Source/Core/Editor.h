@@ -2,6 +2,9 @@
 
 #include <Engine.h>
 
+/// @brief forward declarations
+namespace Cosmos { class Demo; }
+
 namespace Cosmos
 {
 	class Editor : public ApplicationBase
@@ -49,5 +52,8 @@ namespace Cosmos
 		/// @brief called from window when dpi change is triggered
 		virtual void OnDPIChange(float scale);
 
+	private:
+
+		Demo* mDemo = nullptr;
 	};
 }

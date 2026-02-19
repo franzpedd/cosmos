@@ -107,11 +107,10 @@ namespace Cosmos
 		virtual void OnDPIChange(float scale);
 
 	private:
-
 		GUI* mGUI;
 		Renderer* mRenderer;
 		Window* mWindow;
-		
+
 		float mAverageFPS = 0.0f;
 		float mTimestep = 0.0f;
 		const char* mAssetsPath = nullptr;

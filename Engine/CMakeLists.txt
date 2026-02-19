@@ -25,20 +25,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)
 
 # ----------------------------------------------------------------------- project
 set(SOURCES
-    # Thirdparty: ImGui
-    Thirdparty/imgui/imconfig.h
-    Thirdparty/imgui/imgui_demo.cpp
-    Thirdparty/imgui/imgui_draw.cpp
-    Thirdparty/imgui/imgui_internal.h
-    Thirdparty/imgui/imgui_tables.cpp
-    Thirdparty/imgui/imgui_widgets.cpp
-    Thirdparty/imgui/imgui.cpp
-    Thirdparty/imgui/imgui.h
-    Thirdparty/imgui/imstb_rectpack.h
-    Thirdparty/imgui/imstb_textedit.h
-    Thirdparty/imgui/imstb_truetype.h
-    Thirdparty/imgui/backends/imgui_impl_sdl3.h
-    Thirdparty/imgui/backends/imgui_impl_vulkan.h
 
     # Core
     Source/Engine.h
@@ -49,6 +35,11 @@ set(SOURCES
     Source/Core/Renderer.h          Source/Core/Renderer.cpp
     Source/Core/Window.h            Source/Core/Window.cpp
 
+    # Scene
+    Source/Scene/Components.h       Source/Scene/Components.cpp
+    Source/Scene/Entity.h
+    Source/Scene/World.h            Source/Scene/World.cpp
+
     # UI
     Source/UI/GUI.h                 Source/UI/GUI.cpp
     Source/UI/Icons.h
@@ -58,12 +49,16 @@ set(SOURCES
     # Util
     Source/Util/Clock.h
     Source/Util/Container.h
+    Source/Util/Datafile.h
+    Source/Util/ID.h
+    Source/Util/Library.h
 )
 add_group(${SOURCES})
 add_library(Engine SHARED ${SOURCES})
 
 target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Source ${CMAKE_SOURCE_DIR}/Engine/Thirdparty)
 target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk/thirdparty)
+target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/imgui)
 
 target_compile_definitions(Engine PRIVATE EVK_ENABLE_VALIDATIONS=1)
 target_compile_definitions(Engine PRIVATE COSMOS_EXPORT)
@@ -73,7 +68,7 @@ set_target_properties(Engine PROPERTIES FOLDER "Projects")
 
 # ----------------------------------------------------------------------- extra
 
-target_link_libraries(Engine PRIVATE SDL3::SDL3)
+target_link_libraries(Engine PRIVATE SDL3::SDL3 ImGui)
 
 # copy the SDL3 into the build folder
 add_custom_command(TARGET Engine POST_BUILD

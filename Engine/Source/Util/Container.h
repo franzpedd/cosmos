@@ -9,7 +9,7 @@
 namespace Cosmos
 {
     template<typename T>
-    class COSMOS_API DualContainer
+    class DualContainer // dont export template class
     {
     public:
 

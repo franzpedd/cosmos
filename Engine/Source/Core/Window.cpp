@@ -4,6 +4,7 @@
 #include "Core/Logger.h"
 #include "UI/Images.h"
 #include <SDL3/SDL.h>
+#include <imgui/backends/imgui_impl_sdl3.h>
 #include <evk.h>
 
 namespace Cosmos
@@ -64,7 +65,7 @@ namespace Cosmos
 
 		while (SDL_PollEvent(&event))
 		{
-			//ImGui_ImplSDL3_ProcessEvent(&event);
+			ImGui_ImplSDL3_ProcessEvent(&event);
 
 			switch (event.type)
 			{

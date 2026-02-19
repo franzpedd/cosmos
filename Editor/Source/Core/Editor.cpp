@@ -1,14 +1,19 @@
 #include "Editor.h"
 
+#include "UI/Demo.h"
+
 namespace Cosmos
 {
 	Editor::Editor(const ApplicationBase::CreateInfo& info)
 		: ApplicationBase(info)
 	{
+		mDemo = new Demo();
+		GetGUI()->AddWidget(mDemo);
 	}
 
 	Editor::~Editor()
 	{
+		delete mDemo;
 	}
 
 	void Editor::OnMinimize()

@@ -25,7 +25,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)
 
 # ----------------------------------------------------------------------- project
 set(SOURCES
+    # Core
     Source/Core/Editor.h           Source/Core/Editor.cpp
+
+    # UI
+    Source/UI/Demo.h                Source/UI/Demo.cpp
+
+    # Entrypoint
     Source/main.cpp
 )
 add_group(${SOURCES})
@@ -38,4 +44,4 @@ target_include_directories(Editor PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/e
 set_target_properties(Editor PROPERTIES FOLDER "Projects")
 set_target_properties(Editor PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Editor>")
 
-target_link_libraries(Editor PRIVATE Engine)
+target_link_libraries(Editor PRIVATE Engine ImGui)

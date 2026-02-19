@@ -20,6 +20,9 @@ namespace Cosmos
 		/// @brief destructor
 		virtual ~GUI();
 
+		/// @brief returns the imgui context
+		static void* GetImGuiContext();
+
 	public:
 
 		/// @brief process all logic events
@@ -82,7 +85,6 @@ namespace Cosmos
 
 		ApplicationBase* mApp = nullptr;
 		bool mCursorVisible = true;
-		void* mContext = nullptr;
 		DualContainer<WidgetBase*> mWidgets;
     };
 }

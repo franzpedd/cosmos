@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Defines.h"
+#include "Util/ID.h"
 
 /// @brief forward declarations
 namespace Cosmos { class ApplicationBase; }
@@ -22,6 +23,9 @@ namespace Cosmos
 
         /// @brief returns if vsync is enabled/disabled
         inline bool GetVSync() const { return mVSync; }
+
+        /// @brief returns a reference to the id generator
+        inline IDGen& GetIDGenRef() { return mIDGen; }
 
     public:
 
@@ -51,5 +55,6 @@ namespace Cosmos
         ApplicationBase* mApp = nullptr;
         uint32_t mAPIVersion = 0;
         bool mVSync = false;
+        IDGen mIDGen;
     };
 }
