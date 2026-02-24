@@ -51,7 +51,7 @@ namespace Cosmos
         Entity* FindEntity(ID id);
 
         /// @brief creates a new entity on the world at a given position, returns it's id or 0 if failed
-        ID CreateEntity(const char* name, const float3& pos = {0.0f, 0.0f, 0.0f});
+        Entity* CreateEntity(const char* name, const float3& pos = {0.0f, 0.0f, 0.0f});
 
         /// @brief destroys an entity by it's id
         void DestroyEntity(ID id);

@@ -63,12 +63,12 @@ namespace Cosmos
 
         /// @brief adds a unique type of component to the entity
         template<typename T, typename... Args>
-        void AddComponent()
+        void AddComponent(Args&&... args)
         {
             if (HasComponent<T>()) return;
 
             // construct in-place with perfect forwarding
-            auto [it, inserted] = mComponents.try_emplace(typeid(T), std::in_place_type<T>, std::forward<Args>(args)...);
+            auto [it, inserted] = mComponents.try_emplace(typeid(T), std::in_place_type<T>,  std::forward<Args>(args)...);
         }
 
         /// @brief erases the component from the entity

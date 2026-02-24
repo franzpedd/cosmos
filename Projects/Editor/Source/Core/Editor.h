@@ -4,6 +4,7 @@
 
 /// @brief forward declarations
 namespace Cosmos { class Demo; }
+namespace Cosmos { class Grid; }
 
 namespace Cosmos
 {
@@ -55,5 +56,6 @@ namespace Cosmos
 	private:
 
 		Demo* mDemo = nullptr;
+		Grid* mGrid = nullptr;
 	};
 }

@@ -7,6 +7,7 @@
 namespace Cosmos { class GUI; }
 namespace Cosmos { class Renderer; }
 namespace Cosmos { class Window; }
+namespace Cosmos { class World; }
 
 namespace Cosmos
 {
@@ -59,11 +60,14 @@ namespace Cosmos
 		/// @brief returns the window object
 		inline Window* GetWindow() const { return mWindow; }
 
+		/// @brief returns the world object
+		inline World* GetWorld() const { return mWorld; }
+
 		/// @brief returns the timestep
 		inline float GetTimestep() const { return mTimestep; }
 
 		/// @brief returns the average frames per second
-		inline double GetAverageFPS() const { return mAverageFPS; }
+		inline float GetAverageFPS() const { return mAverageFPS; }
 		
 
 	public:
@@ -110,6 +114,7 @@ namespace Cosmos
 		GUI* mGUI;
 		Renderer* mRenderer;
 		Window* mWindow;
+		World* mWorld;
 
 		float mAverageFPS = 0.0f;
 		float mTimestep = 0.0f;

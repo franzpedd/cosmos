@@ -9,7 +9,7 @@ namespace Cosmos
     public:
 
         /// @brief constructor
-        Demo();
+        Demo(ApplicationBase* app);
 
         /// @brief destructor
         virtual ~Demo();
@@ -22,5 +22,8 @@ namespace Cosmos
         /// @brief updates the renders
         virtual void Render() override;
 
+    private:
+        
+        ApplicationBase* mApp;
     };
 }

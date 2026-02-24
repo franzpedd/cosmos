@@ -61,6 +61,7 @@ target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/e
 target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/imgui)
 
 target_compile_definitions(Engine PRIVATE EVK_ENABLE_VALIDATIONS=1)
+target_compile_definitions(Engine PRIVATE EVK_BUILD_DYNAMIC EVK_EXPORT)
 target_compile_definitions(Engine PRIVATE COSMOS_EXPORT)
 
 set_target_properties(Engine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Engine>")

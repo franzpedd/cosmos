@@ -26,10 +26,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)
 # ----------------------------------------------------------------------- project
 set(SOURCES
     # Core
-    Source/Core/Editor.h           Source/Core/Editor.cpp
+    Source/Core/Editor.h            Source/Core/Editor.cpp
 
     # UI
     Source/UI/Demo.h                Source/UI/Demo.cpp
+    Source/UI/Grid.h                Source/UI/Grid.cpp
 
     # Entrypoint
     Source/main.cpp
@@ -37,7 +38,7 @@ set(SOURCES
 add_group(${SOURCES})
 add_executable(Editor ${SOURCES})
 
-target_include_directories(Editor PUBLIC ${CMAKE_SOURCE_DIR}/Editor/Source)
+target_include_directories(Editor PUBLIC ${CMAKE_SOURCE_DIR}/Projects/Editor/Source)
 target_include_directories(Editor PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Source ${CMAKE_SOURCE_DIR}/Engine/Thirdparty)
 target_include_directories(Editor PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk/thirdparty)
 

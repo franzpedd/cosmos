@@ -13,5 +13,5 @@ include(Engine/Thirdparty/CMakeLists.txt)
 add_subdirectory(Engine)
 
 if(BUILD_PROJECTS)
-    add_subdirectory(Editor)
+    add_subdirectory(Projects/Editor)
 endif()

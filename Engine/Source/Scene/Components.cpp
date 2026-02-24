@@ -1,6 +1,7 @@
 #include "Components.h"
 
-#include "Entity.h"
+#include "Core/Logger.h"
+#include "Scene/Entity.h"
 
 namespace Cosmos
 {
@@ -45,5 +46,20 @@ namespace Cosmos
 			auto& dataS = datafile["Transform"]["Scale"];
 			component->scale = { (float)dataS["X"].GetDouble(), (float)dataS["Y"].GetDouble(), (float)dataS["Z"].GetDouble() };
 		}
+	}
+
+	CameraComponent::CameraComponent(evkCamera* camera)
+		: camera(camera)
+	{
+	}
+
+	void CameraComponent::Save(Entity* entity, Datafile& datafile)
+	{
+		LOG_TO_TERMINAL(Logger::Todo, "Create save for CameraComponent");
+	}
+
+	void CameraComponent::Load(Entity* entity, Datafile& datafile)
+	{
+		LOG_TO_TERMINAL(Logger::Todo, "Create load for CameraComponent");
 	}
 }

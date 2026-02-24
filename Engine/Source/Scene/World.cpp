@@ -54,18 +54,18 @@ namespace Cosmos
         return mEntities.Get(id).value_or(nullptr);
     }
 
-    ID World::CreateEntity(const char* name, const float3& pos)
+    Entity* World::CreateEntity(const char* name, const float3& pos)
     {
         ID id = mRenderer->GetIDGenRef().Create();
 
         if (id.GetValue() == ID::GetNullID()) {
             LOG_TO_TERMINAL(Logger::Error, "Error while creating entity '%s'. The entity id created is the nullid.", name);
-            return ID::GetNullID();
+            return NULL;
         }
         
         if (mEntities.Contains(id)) {
             LOG_TO_TERMINAL(Logger::Error, "Error while creating entity '%s'. An entity id '%d' already exists on this world.", name, id.GetValue());
-            return ID::GetNullID();
+            return NULL;
         }
 
         Entity* ent = new Entity(name, id);
@@ -75,10 +75,10 @@ namespace Cosmos
         if (!mEntities.Insert(id, ent)) {
             LOG_TO_TERMINAL(Logger::Error, "Error while creating entity '%s'. Unable to insert entity on world entity library.", name);
             delete ent;
-            return ID::GetNullID();
+            return NULL;
         }
 
-        return id;
+        return ent;
     }
 
     void World::DestroyEntity(ID id)

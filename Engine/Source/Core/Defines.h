@@ -3,7 +3,9 @@
 #include <stdint.h>
 
 /// @brief DLL exporting
-#if defined(_WIN32)
+#if defined(COSMOS_STATIC)
+    #define COSMOS_API
+#elif defined(_WIN32)
     #if defined(COSMOS_EXPORT)
         #define COSMOS_API __declspec(dllexport)
     #else

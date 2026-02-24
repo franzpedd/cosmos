@@ -2,14 +2,14 @@
 
 #include "Core/Defines.h"
 #include "Util/Datafile.h"
-#include <vecmath/vecmath.h>
+#include <evk.h>
 
 /// @brief forward declarations
 namespace Cosmos { class Entity; }
 
 namespace Cosmos
 {
-    struct TransformComponent
+    struct COSMOS_API TransformComponent
     {
     public:
 
@@ -26,5 +26,22 @@ namespace Cosmos
         float3 translation;
         float3 rotation;
         float3 scale;
+    };
+
+    struct COSMOS_API CameraComponent
+    {
+    public:
+
+        /// @brief constructor
+        CameraComponent(evkCamera* camera = NULL);
+
+        /// @brief saves the camera component of an entity into a datafile
+        static void Save(Entity* entity, Datafile& datafile);
+
+        /// @brief loads the camera component of an entity from a datafile
+        static void Load(Entity* entity, Datafile& datafile);
+
+    public:
+        evkCamera* camera;
     };
 }

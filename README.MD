@@ -30,8 +30,9 @@ cmake ..
 The solution files (depending on your current system) will be generated under "Build" folder.
 
 ## Progress
-As development goes I'll try to update visually on how the project is, features, tests and releases. Currently there isn't much to show but ImGui is already integrated and functional:
-![img](Docs/img/progress0.png)
+As development goes I'll try to update visually on how the project is, features, tests and releases. Currently there isn't much to show.
+The grid system is implemented (initial stage).
+![img](Docs/img/progress1.png)
 
 ## Thirdparty
 * [CMake](https://cmake.org/): Build System;

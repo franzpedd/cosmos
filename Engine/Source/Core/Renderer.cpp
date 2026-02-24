@@ -75,9 +75,14 @@ namespace Cosmos
 		evk_update(timestep);
 	}
 
+	void Renderer::Render(float timestep)
+	{
+		evk_render(timestep);
+	}
+
 	void Renderer::OnRenderCallback(float timestep)
 	{
-		// render scene
+		mApp->GetGUI()->Render();
 	}
 
 	void Renderer::OnRenderUICallback(void* rawCommandBuffer)

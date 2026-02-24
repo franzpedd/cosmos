@@ -183,8 +183,6 @@ namespace Cosmos
 
 	void Window::ToggleCursor()
 	{
-		mCursorVisible = !mCursorVisible;
-
 		SDL_SetWindowRelativeMouseMode(mNativeWindow, mCursorVisible);
 
 		if (!mCursorVisible) {
@@ -192,6 +190,8 @@ namespace Cosmos
 			SDL_GetWindowSize(mNativeWindow, &w, &h);
 			SDL_WarpMouseInWindow(mNativeWindow, (float)(w / 2), (float)(h / 2));
 		}
+
+		mCursorVisible = !mCursorVisible;
 	}
 
 	float2 Window::GeSize()

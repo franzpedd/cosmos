@@ -4,6 +4,7 @@
 #include "Util/ID.h"
 
 /// @brief forward declarations
+struct evkGrid;
 namespace Cosmos { class ApplicationBase; }
 
 namespace Cosmos
@@ -29,8 +30,11 @@ namespace Cosmos
 
     public:
 
-        /// @brief begins the rendering of the frame
+        /// @brief begins the updating of the frame
         void Update(float timestep);
+
+        /// @brief begins the rendering of the frame
+        void Render(float timestep);
 
         /// @brief called when it's time to draw individual objects
         void OnRenderCallback(float timestep);
