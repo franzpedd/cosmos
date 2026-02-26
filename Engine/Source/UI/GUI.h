@@ -12,10 +12,17 @@ namespace Cosmos
 {
     class COSMOS_API GUI
     {
+	public:
+
+		enum Style
+		{
+			Classic = 0, GoldSrc, Darkish
+		};
+
     public:
 
 		/// @brief constructor
-		GUI(ApplicationBase* app);
+		GUI(ApplicationBase* app, Style style = Classic);
 
 		/// @brief destructor
 		virtual ~GUI();
@@ -80,6 +87,17 @@ namespace Cosmos
 
 		/// @brief called from window when dpi change is triggered
 		virtual void OnDPIChange(float scale);
+
+	public:
+
+		/// @brief sets a style to the gui
+		void SetStyle(Style style);
+
+		/// @brief GoldSrc inspired style
+		void SetGoldSrcTheme();
+
+		/// @brief Darkish theme
+		void SetDarkishTheme();
 
     private:
 

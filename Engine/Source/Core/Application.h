@@ -75,6 +75,9 @@ namespace Cosmos
 		/// @brief initializes the loop/run process
 		void Run();
 
+		/// @brief forces the application shutdown
+		void Quit();
+
 	public:
 
 		/// @brief called from window when it gets minimized

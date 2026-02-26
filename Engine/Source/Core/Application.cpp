@@ -96,6 +96,11 @@ namespace Cosmos
         }
 	}
 
+    void ApplicationBase::Quit()
+    {
+        mWindow->Quit();
+    }
+
     void ApplicationBase::OnMinimize()
     {
         mRenderer->OnMinimize();

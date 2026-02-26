@@ -56,9 +56,9 @@ set(SOURCES
 add_group(${SOURCES})
 add_library(Engine SHARED ${SOURCES})
 
-target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Source ${CMAKE_SOURCE_DIR}/Engine/Thirdparty)
-target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk/thirdparty)
-target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/imgui)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Source ${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/evk/evk ${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/evk/evk/thirdparty)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Thirdparty/imgui)
 
 target_compile_definitions(Engine PRIVATE EVK_ENABLE_VALIDATIONS=1)
 target_compile_definitions(Engine PRIVATE EVK_BUILD_DYNAMIC EVK_EXPORT)
@@ -67,9 +67,14 @@ target_compile_definitions(Engine PRIVATE COSMOS_EXPORT)
 set_target_properties(Engine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Engine>")
 set_target_properties(Engine PROPERTIES FOLDER "Projects")
 
+target_link_libraries(Engine PRIVATE SDL3::SDL3 ImGui)
+
 # ----------------------------------------------------------------------- extra
 
-target_link_libraries(Engine PRIVATE SDL3::SDL3 ImGui)
+# add android stuff on build process
+if(ANDROID)
+    target_link_libraries(Engine PRIVATE android log)
+endif()
 
 # copy the SDL3 into the build folder
 add_custom_command(TARGET Engine POST_BUILD

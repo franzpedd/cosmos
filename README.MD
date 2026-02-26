@@ -34,8 +34,24 @@ As development goes I'll try to update visually on how the project is, features,
 The grid system is implemented (initial stage).
 ![img](Docs/img/progress1.png)
 
+There are some projects to get your started on how to use the framework/engine.
+Desktop projects will be generated alongisde CMake building process. Android projects will have necessary files included for opening in Android Studio.
+They're not exactly state of the art but serves well as an example.
+
+<p align="center">
+    <img src="docs/img/progress2.png" alt="ResCalc" width="30%">
+</p>
+<p align="center"> ResCalc Android </p>
+
+<p align="center">
+    <img src="docs/img/progress3.png" alt="ResCalc" width="30%"> 
+</p>
+<p align="center"> ResCalc Desktop </p>
+
+
 ## Thirdparty
 * [CMake](https://cmake.org/): Build System;
 * [EVK](https://github.com/franzpedd/evk): Vulkan Renderer;
 * [SDL3](https://github.com/libsdl-org/SDL): Window Manager;
 * [ImGui](https://github.com/ocornut/imgui): Graphical Interface;
+* [Lucide](https://lucide.dev/icons/) && [Font Awesome](https://fontawesome.com/): Icons library;

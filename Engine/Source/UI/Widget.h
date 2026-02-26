@@ -3,6 +3,8 @@
 #include "Core/Defines.h"
 #include "Core/Input.h"
 #include <vecmath/vecmath.h>
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui.h>
 
 namespace Cosmos
 {
@@ -117,4 +119,56 @@ namespace Cosmos::Widget
 	/// @param y second controller value
 	/// @param z third controller value
 	COSMOS_API void Float3Controller(const char* label, float* x, float* y, float* z);
+}
+
+namespace Cosmos::Widget::Util
+{
+	class ControlWrapper
+	{
+	public:
+
+		/// @brief constructor
+		explicit ControlWrapper(bool result) : mResult(result) {}
+
+		/// @brief returns the result
+		operator bool() const { return mResult; }
+
+	private:
+		bool mResult;
+	};
+
+	class Control
+	{
+	public:
+		
+		/// @brief constructor
+		Control(ImVec2 windowSize) : mWindowSize(windowSize) {}
+
+		/// @brief draws and returns bool operator overload (ImGui style)
+		template<typename Func>
+		ControlWrapper operator()(Func control) const
+		{
+			ImVec2 originalPos = ImGui::GetCursorPos();
+
+			// draw offscreen to calculate size
+			ImGui::SetCursorPos(ImVec2(-10000.0f, -10000.0f));
+
+			ImGui::PushID(this);
+			control();
+			ImGui::PopID();
+
+			ImVec2 controlSize = ImGui::GetItemRectSize();
+
+			// draw at centered position
+			ImGui::SetCursorPos(ImVec2((mWindowSize.x - controlSize.x) * 0.5f, originalPos.y));
+			control();
+			return ControlWrapper(ImGui::IsItemClicked());
+		}
+
+	private:
+		ImVec2 mWindowSize;
+	};
+
+	/// @brief macro to create a centered imgui widget
+	#define WidgetCentered(control) Cosmos::Widget::Util::Control { ImGui::GetWindowSize() }([&]() { control; } )
 }

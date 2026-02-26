@@ -14,4 +14,5 @@ add_subdirectory(Engine)
 
 if(BUILD_PROJECTS)
     add_subdirectory(Projects/Editor)
+    add_subdirectory(Projects/ResCalc_Desktop)
 endif()

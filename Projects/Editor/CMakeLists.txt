@@ -46,3 +46,5 @@ set_target_properties(Editor PROPERTIES FOLDER "Projects")
 set_target_properties(Editor PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Editor>")
 
 target_link_libraries(Editor PRIVATE Engine ImGui)
+
+# ----------------------------------------------------------------------- extra
