@@ -39,15 +39,14 @@ Desktop projects will be generated alongisde CMake building process. Android pro
 They're not exactly state of the art but serves well as an example.
 
 <p align="center">
-    <img src="docs/img/progress2.png" alt="ResCalc" width="30%">
+    <img src="Docs/img/progress2.png" alt="ResCalc" width="30%">
 </p>
 <p align="center"> ResCalc Android </p>
 
 <p align="center">
-    <img src="docs/img/progress3.png" alt="ResCalc" width="30%"> 
+    <img src="Docs/img/progress3.png" alt="ResCalc" width="30%"> 
 </p>
 <p align="center"> ResCalc Desktop </p>
-
 
 ## Thirdparty
 * [CMake](https://cmake.org/): Build System;
