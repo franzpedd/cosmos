@@ -68,7 +68,7 @@ namespace Cosmos
 
         ImGui::SameLine();
 
-        Widget::ButtonOption("Create", 1, &selectedOption, selectedColor, buttonColor, ImVec2(xSize, ySize));
+        Widget::ButtonOption("Add", 1, &selectedOption, selectedColor, buttonColor, ImVec2(xSize, ySize));
 
         ImGui::SameLine();
 
@@ -109,8 +109,8 @@ namespace Cosmos
                     [this, fx]()
                     {
                         fx->OnLeftButton();
-                        fx->Disable();  // Mark as disabled
-                        mPendingMoves.push_back({ fx, false }); // Remove from enabled
+                        fx->Disable();
+                        mPendingMoves.push_back({ fx, false });
                     },
                     [fx]()
                     {
@@ -152,8 +152,8 @@ namespace Cosmos
                     [this, fx]()
                     {
                         fx->OnLeftButton();
-                        fx->Enable();  // Mark as enabled
-                        mPendingMoves.push_back({ fx, true }); // Add to enabled
+                        fx->Enable();
+                        mPendingMoves.push_back({ fx, true });
                     },
                     [fx]()
                     {
@@ -171,6 +171,80 @@ namespace Cosmos
     
     void CoreWidget::DrawSettingsMenu()
     {
+        const ImVec2 contentRegionAvail = ImGui::GetContentRegionAvail();
+        constexpr float buttonYSize = 75.0f;
+
+        ImGui::BeginChild("##SettingsChild", contentRegionAvail);
+        {
+            if (ImGui::Button(ICON_LC_BLUETOOTH " Connect", ImVec2(contentRegionAvail.x, buttonYSize)))
+            {
+                ImGui::OpenPopup("ConnectModal");
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::Button(ICON_LC_INFO " Info", ImVec2(contentRegionAvail.x, buttonYSize)))
+            {
+                ImGui::OpenPopup("InfoModal");
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::Button(ICON_LC_LOG_OUT " Exit", ImVec2(contentRegionAvail.x, buttonYSize)))
+            {
+                mApp->Quit();
+            }
+
+            ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+            // popup for connect
+            if (ImGui::BeginPopupModal("ConnectModal", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove))
+            {
+                ImGui::SeparatorText(ICON_LC_BLUETOOTH_SEARCHING " List of devices");
+
+                // close
+                if (WidgetCentered(ImGui::Button("Close", ImVec2(120, 0)))) {
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            }
+
+            // popup for info
+            if (ImGui::BeginPopupModal("InfoModal", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove))
+            {
+                // about
+                ImGui::SeparatorText("About");
+                ImGui::Text("Designed to control the FXServer pedalboard.");
+                ImGui::Text("1) Connect FXClient with FXServer via menu.");
+                ImGui::Text("2) Add FXs and modify them.");
+                
+                // build
+                char buildDate[32];
+                FormatCompilationVersion(GetCompilationVersion(), buildDate, sizeof(buildDate));
+
+                ImGui::SeparatorText("Build");
+                ImGui::Text("Version: 1");
+                ImGui::Text("Date: %s", buildDate);
+
+                // credits
+
+                ImGui::SeparatorText("Credits");
+                ImGui::Text("Developed by");
+                ImGui::SameLine();
+                ImGui::TextLinkOpenURL("franzpedd", "https://franzpedd.me/");
+                ImGui::SameLine();
+                ImGui::Text("using");
+                ImGui::SameLine();
+                ImGui::TextLinkOpenURL("Cosmos Engine", "https://github.com/cosmos");
+
+                // close
+                if (WidgetCentered(ImGui::Button("Close", ImVec2(120, 0)))) {
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            }
+        }
+        ImGui::EndChild();
     }
 
     void CoreWidget::DrawFXBox(const char* effectName, float boxWidth, float boxHeight, float leftButtonWidth, float titleYOffset, float innerXOffset, float innerYOffset, float smallButtonSize, std::function<void()> onLeftButtonClick, std::function<void()> onSettingsClick)
@@ -212,15 +286,18 @@ namespace Cosmos
     {
         for (const auto& cmd : mPendingMoves)
         {
-            if (cmd.addToEnabled) {
-                // Add to enabled if not already there
+            if (cmd.addToEnabled)
+            {
+                // add to enabled if not already there
                 auto it = std::find(mEnabledFX.begin(), mEnabledFX.end(), cmd.fx);
                 if (it == mEnabledFX.end()) {
                     mEnabledFX.push_back(cmd.fx);
                 }
             }
-            else {
-                // Remove from enabled
+
+            else
+            {
+                // remove from enabled
                 auto it = std::find(mEnabledFX.begin(), mEnabledFX.end(), cmd.fx);
                 if (it != mEnabledFX.end()) {
                     mEnabledFX.erase(it);
