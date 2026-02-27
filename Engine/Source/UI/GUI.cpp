@@ -308,6 +308,11 @@ namespace Cosmos
 			});
 	}
 
+	ImVec4* GUI::GetStyleColors()
+	{
+		return ImGui::GetStyle().Colors;
+	}
+
 	void GUI::SetStyle(Style style)
 	{
 		switch (style)

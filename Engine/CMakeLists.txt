@@ -65,7 +65,7 @@ target_compile_definitions(Engine PRIVATE EVK_BUILD_DYNAMIC EVK_EXPORT)
 target_compile_definitions(Engine PRIVATE COSMOS_EXPORT)
 
 set_target_properties(Engine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Engine>")
-set_target_properties(Engine PROPERTIES FOLDER "Projects")
+set_target_properties(Engine PROPERTIES FOLDER "Engine")
 
 target_link_libraries(Engine PRIVATE SDL3::SDL3 ImGui)
 

@@ -3,6 +3,8 @@
 #include "Core/Defines.h"
 #include "Core/Input.h"
 #include "Util/Container.h"
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui.h>
 
 /// @brief forward declarations
 namespace Cosmos { class ApplicationBase; }
@@ -89,6 +91,9 @@ namespace Cosmos
 		virtual void OnDPIChange(float scale);
 
 	public:
+
+		/// @brief returns the curernt style colors
+		ImVec4* GetStyleColors();
 
 		/// @brief sets a style to the gui
 		void SetStyle(Style style);

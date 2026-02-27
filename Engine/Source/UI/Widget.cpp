@@ -325,4 +325,16 @@ namespace Cosmos::Widget
 		//return pressed;
 		return false;
 	}
+
+	COSMOS_API bool ButtonOption(const char* label, int32_t optionid, int32_t* selectedoptionid, const ImVec4& selectedColor, const ImVec4& color, const ImVec2& size)
+	{
+		if (*selectedoptionid == optionid) { ImGui::PushStyleColor(ImGuiCol_Button, selectedColor); }
+		else { ImGui::PushStyleColor(ImGuiCol_Button, color); }
+
+		bool clicked = ImGui::Button(label, size);
+		ImGui::PopStyleColor();
+
+		if (clicked) { *selectedoptionid = optionid; }
+		return clicked;
+	}
 }

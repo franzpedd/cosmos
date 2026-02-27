@@ -119,6 +119,15 @@ namespace Cosmos::Widget
 	/// @param y second controller value
 	/// @param z third controller value
 	COSMOS_API void Float3Controller(const char* label, float* x, float* y, float* z);
+
+	/// @brief draws a button with custom color when selected
+	/// @param label label control text
+	/// @param optionid the id of the button
+	/// @param selectedoptionid address to the selected button holder
+	/// @param selectedcolor the color of the button when selected
+	/// @param color the button default color
+	/// @param size the button size
+	COSMOS_API bool ButtonOption(const char* label, int32_t optionid, int32_t* selectedoptionid, const ImVec4& selectedColor, const ImVec4& color, const ImVec2& size = ImVec2(0.0f, 0.0f));
 }
 
 namespace Cosmos::Widget::Util
