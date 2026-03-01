@@ -5,6 +5,7 @@
 #include <vecmath/vecmath.h>
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
+#include <algorithm>
 
 namespace Cosmos
 {
@@ -146,32 +147,175 @@ namespace Cosmos::Widget::Util
 		bool mResult;
 	};
 
+	class ControlID
+	{
+	public:
+
+		/// @brief constructor
+		ControlID() { ImGui::PushID(this); }
+
+		/// @brief destructor
+		~ControlID() { ImGui::PopID(); }
+
+		/// @brief delete copy constructor
+		ControlID(const ControlID&) = delete;
+
+		/// @brief delete assignment constructor
+		ControlID& operator=(const ControlID&) = delete;
+	};
+
+	class LineGroup
+	{
+	public:
+
+		/// @brief constructor
+		LineGroup() : mItemCount(0), mMinX(FLT_MAX), mMaxX(-FLT_MAX), mMinY(FLT_MAX), mMaxY(-FLT_MAX) {}
+
+		/// @brief add items into the line group (for measurement)
+		template<typename Func>
+		LineGroup& AddForMeasure(Func control)
+		{
+			ImVec2 beforePos = ImGui::GetCursorPos();
+
+			if (mItemCount > 0) { ImGui::SameLine(); }
+
+			control();
+
+			// update bounding box
+			ImVec2 itemMin = ImGui::GetItemRectMin();
+			ImVec2 itemMax = ImGui::GetItemRectMax();
+
+			mMinX = std::min(mMinX, itemMin.x);
+			mMaxX = std::max(mMaxX, itemMax.x);
+			mMinY = std::min(mMinY, itemMin.y);
+			mMaxY = std::max(mMaxY, itemMax.y);
+
+			mItemCount++;
+			return *this;
+		}
+
+		/// @brief add items into the line group (for drawing)
+		template<typename Func>
+		LineGroup& AddForDraw(Func control, float startX, float originalY)
+		{
+			ImGui::SetCursorPos(ImVec2(startX, originalY));
+
+			for (int i = 0; i < mItemCount; i++)
+			{
+				if (i > 0)
+				{
+					// move cursor to next position based on previous item's size
+					ImVec2 lastItemSize = ImGui::GetItemRectSize();
+					startX += lastItemSize.x + ImGui::GetStyle().ItemSpacing.x;
+					ImGui::SetCursorPos(ImVec2(startX, originalY));
+				}
+				control();
+			}
+
+			return *this;
+		}
+
+		/// @brief returns how many items are in the line group
+		int GetItemCount() const { return mItemCount; }
+
+		/// @brief returns the total width of all items (including spacing)
+		float GetTotalWidth() const
+		{
+			if (mItemCount <= 1) { return mMaxX - mMinX; }
+				
+			// add spacing between items
+			return (mMaxX - mMinX) + (ImGui::GetStyle().ItemSpacing.x * (mItemCount - 1));
+		}
+
+	private:
+		int mItemCount;
+		float mMinX, mMaxX, mMinY, mMaxY;
+	};
+
 	class Control
 	{
 	public:
-		
+
 		/// @brief constructor
 		Control(ImVec2 windowSize) : mWindowSize(windowSize) {}
 
-		/// @brief draws and returns bool operator overload (ImGui style)
+		/// operator overload for single controls
 		template<typename Func>
-		ControlWrapper operator()(Func control) const
+		static ControlWrapper Centered(Func control)
 		{
+			ImVec2 windowSize = ImGui::GetWindowSize();
 			ImVec2 originalPos = ImGui::GetCursorPos();
 
 			// draw offscreen to calculate size
 			ImGui::SetCursorPos(ImVec2(-10000.0f, -10000.0f));
 
-			ImGui::PushID(this);
+			// use a unique id based on the function address to avoid conflicts
+			ImGui::PushID(&control);
 			control();
 			ImGui::PopID();
 
 			ImVec2 controlSize = ImGui::GetItemRectSize();
 
 			// draw at centered position
-			ImGui::SetCursorPos(ImVec2((mWindowSize.x - controlSize.x) * 0.5f, originalPos.y));
+			ImGui::SetCursorPos(ImVec2((windowSize.x - controlSize.x) * 0.5f, originalPos.y));
 			control();
 			return ControlWrapper(ImGui::IsItemClicked());
+		}
+
+		/// @brief static method for multiple controls
+		template<typename... Controls>
+		static bool CenteredLine(Controls&&... controls)
+		{
+			ControlID id;
+			ImVec2 windowSize = ImGui::GetWindowSize();
+			ImVec2 originalPos = ImGui::GetCursorPos();
+
+			// first pass: neasure offscreen - track the bounding box of ALL items
+			ImGui::SetCursorPos(ImVec2(-10000.0f, -10000.0f));
+
+			// track the min and max X positions of all items
+			float minX = FLT_MAX;
+			float maxX = -FLT_MAX;
+			int count = 0;
+
+			([&]()
+				{
+					if (count > 0) ImGui::SameLine();
+
+					ImGui::PushID(count * 2);  // measurement pass gets even IDs
+					std::forward<Controls>(controls)();
+					ImGui::PopID();
+
+					// get the actual item rectangle and update bounds
+					ImVec2 itemMin = ImGui::GetItemRectMin();
+					ImVec2 itemMax = ImGui::GetItemRectMax();
+
+					minX = std::min(minX, itemMin.x);
+					maxX = std::max(maxX, itemMax.x);
+
+					count++;
+				}(), ...);
+
+			// calculate total width (including the natural spacing from SameLine)
+			float totalWidth = maxX - minX;
+
+			// second pass: draw centered
+			float startX = (windowSize.x - totalWidth) * 0.5f;
+			ImGui::SetCursorPos(ImVec2(startX, originalPos.y));
+
+			count = 0;
+			([&]()
+				{
+					if (count > 0) ImGui::SameLine();
+
+					ImGui::PushID((count * 2) + 1);  // display pass gets odd ids
+					std::forward<Controls>(controls)();
+					ImGui::PopID();
+
+					count++;
+				}(), ...);
+
+			return ImGui::IsItemClicked();
 		}
 
 	private:
@@ -179,5 +323,8 @@ namespace Cosmos::Widget::Util
 	};
 
 	/// @brief macro to create a centered imgui widget
-	#define WidgetCentered(control) Cosmos::Widget::Util::Control { ImGui::GetWindowSize() }([&]() { control; } )
+	#define WidgetCentered(control) Cosmos::Widget::Util::Control::Centered([&]() { control; })
+
+	/// @brief macro to create a centered imgui widget group
+	#define WidgetGroupCentered(...) Cosmos::Widget::Util::Control::CenteredLine(__VA_ARGS__)
 }

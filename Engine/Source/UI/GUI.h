@@ -32,6 +32,9 @@ namespace Cosmos
 		/// @brief returns the imgui context
 		static void* GetImGuiContext();
 
+		/// @brief returns the font scalar for creating ui widgets, on android things should be larger than desktop
+		static float GetFontScalar();
+
 	public:
 
 		/// @brief process all logic events

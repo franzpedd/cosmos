@@ -24,4 +24,5 @@
 
 // thirdparty
 #include <imgui/imgui.h>
+#include <vecmath/vecmath.h>
 #include <evk.h>

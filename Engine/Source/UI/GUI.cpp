@@ -14,7 +14,6 @@
 #include <imgui/backends/imgui_impl_sdl3.cpp>
 #include <imgui/backends/imgui_impl_vulkan.cpp>
 #include <font/lucide/lucide.c>
-#include <font/awesome/awesome.c>
 #include <font/roboto/robotomono.c>
 
 IMGUI_API ImGuiContext* GImGui = nullptr; // this is because of imgui
@@ -95,16 +94,9 @@ namespace Cosmos
 		ImGui_ImplVulkan_Init(&info);
 
 		// fonts
-		constexpr const ImWchar iconRanges1[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-		constexpr const ImWchar iconRanges2[] = { ICON_MIN_LC, ICON_MAX_LC, 0 };
-		float iconSize = 13.0f;
-		float fontSize = 18.0f;
-
-		#if defined(__ANDROID__)
-		LOG_TO_TERMINAL(Logger::Todo, "Figure out a better way for icon size");
-		iconSize *= 3.0f;
-		fontSize *= 3.0f;
-		#endif
+		constexpr const ImWchar iconRanges[] = { ICON_MIN_LC, ICON_MAX_LC, 0 };
+		float iconSize = 13.0f * GetFontScalar();
+		float fontSize = 18.0f * GetFontScalar();
 
 		ImFontConfig iconCFG;
 		iconCFG.MergeMode = true;
@@ -112,8 +104,7 @@ namespace Cosmos
 		iconCFG.PixelSnapH = true;
 
 		g_RobotoMono = io.Fonts->AddFontFromMemoryCompressedTTF(txt_robotomono_medium_compressed_data, txt_robotomono_medium_compressed_size, fontSize);
-		g_IconFA = io.Fonts->AddFontFromMemoryCompressedTTF(icon_awesome_compressed_data, icon_awesome_compressed_size, iconSize, &iconCFG, iconRanges1);
-		g_IconLC = io.Fonts->AddFontFromMemoryCompressedTTF(icon_lucide_compressed_data, icon_lucide_compressed_size, iconSize, &iconCFG, iconRanges2);
+		g_IconLC = io.Fonts->AddFontFromMemoryCompressedTTF(icon_lucide_compressed_data, icon_lucide_compressed_size, iconSize, &iconCFG, iconRanges);
 		io.Fonts->Build();
 
 		SetStyle(style);
@@ -133,6 +124,15 @@ namespace Cosmos
 	void* GUI::GetImGuiContext()
 	{
 		return g_Context;
+	}
+
+	float GUI::GetFontScalar()
+	{
+		#if defined(__ANDROID__)
+		return 3.0f;
+		#else
+		return 1.0f;
+		#endif
 	}
 
 	void GUI::Update()

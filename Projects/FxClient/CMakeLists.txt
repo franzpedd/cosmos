@@ -1,18 +1,3 @@
-# ----------------------------------------------------------------------- group files
-function(add_group)
-    foreach(file IN LISTS ARGN)
-        get_filename_component(dir "${file}" DIRECTORY)
-
-        if(dir STREQUAL "")
-            set(group "root")
-        else()
-            string(REPLACE "/" "\\" group "${dir}")
-        endif()
-
-        source_group("${group}" FILES "${file}")
-    endforeach()
-endfunction()
-
 # ----------------------------------------------------------------------- configuration
 cmake_minimum_required(VERSION 3.22.1)
 project(FXClient LANGUAGES CXX)
@@ -24,27 +9,19 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Bin)
 
 # ----------------------------------------------------------------------- project
-set(SOURCES
-    # Core
-    Source/Application.h        Source/Application.cpp
+set(FXCLIENT_BASE_DIR ${CMAKE_SOURCE_DIR}/Projects/${PROJECT_NAME}/app/src/main/cpp)
 
-    # Widget
-    Source/CoreWidget.h         Source/CoreWidget.cpp
-    Source/Effect.h
-
-    # Entrypoint
-    Source/main.cpp
-)
-add_group(${SOURCES})
+file(GLOB_RECURSE SOURCES "${FXCLIENT_BASE_DIR}/FXClient/*.h" "${FXCLIENT_BASE_DIR}/FXClient/*.cpp" "${FXCLIENT_BASE_DIR}/native-lib.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
+source_group(TREE ${FXCLIENT_BASE_DIR} PREFIX "Source Files" FILES ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/Projects/${PROJECT_NAME}/Source)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Source ${CMAKE_SOURCE_DIR}/Engine/Thirdparty)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk/thirdparty)
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${FXCLIENT_BASE_DIR}/FXClient
+    ${CMAKE_SOURCE_DIR}/Engine/Source 
+    ${CMAKE_SOURCE_DIR}/Engine/Thirdparty
+    ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk 
+    ${CMAKE_SOURCE_DIR}/Engine/Thirdparty/evk/evk/thirdparty
+)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "Projects")
-set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-
+set_target_properties(${PROJECT_NAME} PROPERTIES  FOLDER "Projects" VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 target_link_libraries(${PROJECT_NAME} PRIVATE Engine ImGui)
-
-# ----------------------------------------------------------------------- extra

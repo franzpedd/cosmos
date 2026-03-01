@@ -1,9 +1,7 @@
 ## About
-Cosmos is a 3D renderer/framework engine for developing applications on multi-platforms. It's currently on early stages of development with desktop development as the priority.
+Cosmos is a 3D renderer/framework engine for developing applications on multi-platforms. It's currently on early stages of development but already works on Windows and Android. Linux support will be the next major thing to address.
 
 ## Getting started
-At the momment the best advice is to check the Editor's application. Soon there will be a "blank" sample project for starting a new project as well as more "complete" projects for reference.
-
 Cosmos uses CMake to manage and build all projects used and Cosmos itself.
 You must have Git installed as dependencies are cloned using it.
 
@@ -29,28 +27,41 @@ cmake ..
 
 The solution files (depending on your current system) will be generated under "Build" folder.
 
-## Progress
+## Project: Editor (Desktop)
 As development goes I'll try to update visually on how the project is, features, tests and releases. Currently there isn't much to show.
 The grid system is implemented (initial stage).
 ![img](Docs/img/progress1.png)
 
-There are some projects to get your started on how to use the framework/engine.
-Desktop projects will be generated alongisde CMake building process. Android projects will have necessary files included for opening in Android Studio.
-They're not exactly state of the art but serves well as an example.
-
+## Project: Rescalc (Android/Desktop)
+This project is just a simple working example of a resistor calculator, the code used on both android and desktop is the same, not similar.
 <p align="center">
-    <img src="Docs/img/progress2.png" alt="ResCalc" width="30%">
+    <img src="Docs/img/ResCalc_Win32.png" alt="ResCalc" width="40%">
 </p>
-<p align="center"> ResCalc Android </p>
-
 <p align="center">
-    <img src="Docs/img/progress3.png" alt="ResCalc" width="30%"> 
+    <img src="Docs/img/ResCalc_Android.png" alt="ResCalc" width="40%">
 </p>
-<p align="center"> ResCalc Desktop </p>
 
-## Thirdparty
-* [CMake](https://cmake.org/): Build System;
-* [EVK](https://github.com/franzpedd/evk): Vulkan Renderer;
-* [SDL3](https://github.com/libsdl-org/SDL): Window Manager;
-* [ImGui](https://github.com/ocornut/imgui): Graphical Interface;
-* [Lucide](https://lucide.dev/icons/) && [Font Awesome](https://fontawesome.com/): Icons library;
+## Project: FXClient (Android/Desktop)
+This project is just an unfinished example of a project, in the future it'll include Java code and contain comunication with C++ code via JNI, and just maybe become a full product.
+<p align="center">
+    <img src="Docs/img/FXClient_Win32.png" alt="ResCalc" width="40%">
+</p>
+<p align="center">
+    <img src="Docs/img/FXClient_Android.png" alt="ResCalc" width="40%">
+</p>
+
+## Todo/Fix list
+This is not a complete fix, but a reminder for myself to fix some issues.
+* Export vecmath and any other library correctly;
+* Project creator: App for creating a Cosmos project;
+
+## License and Thirdparty
+As Cosmos itself embraces other projects you must be aware their license as well. They are all permissive enough for redistribution, selling and modifing without any issue (just proper credits).
+
+* [EVK](https://github.com/franzpedd/evk) / Undecided: Vulkan Renderer.    
+* [SDL3](https://github.com/libsdl-org/SDL) / [zlib License](https://www.libsdl.org/license.php): Window Manager.
+* [ImGui](https://github.com/ocornut/imgui) / [MIT License](https://github.com/ocornut/imgui/blob/master/LICENSE.txt): Graphical Interface.
+* [Roboto](https://fonts.google.com/specimen/Roboto+Mono/license) / [ SIL Open Font License, Version 1.1](https://fonts.google.com/specimen/Roboto+Mono/license): Text font.
+* [Lucide](https://lucide.dev/icons/) / [ISC License](https://lucide.dev/license) Icons font.
+
+Cosmos itself has not a license yet.
