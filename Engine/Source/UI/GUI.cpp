@@ -68,7 +68,7 @@ namespace Cosmos
 		pipeline.Subpass = 0;
 		//pipeline.PipelineRenderingCreateInfo; // not used
 		pipeline.RenderPass = renderphase->evkRenderpass.renderpass;
-		pipeline.MSAASamples = VK_SAMPLE_COUNT_1_BIT; // ui layer has no msaa
+		pipeline.MSAASamples = (VkSampleCountFlagBits)renderphase->evkRenderpass.msaa;
 		//pipeline.SwapChainImageUsage; // not used
 
 		ImGui_ImplVulkan_InitInfo info = { 0 };

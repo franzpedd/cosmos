@@ -3,8 +3,8 @@
 #include <Engine.h>
 
 /// @brief forward declarations
-namespace Cosmos { class Demo; }
-namespace Cosmos { class Grid; }
+namespace Cosmos { class Dockspace; }
+namespace Cosmos { class Viewport; }
 
 namespace Cosmos
 {
@@ -55,7 +55,7 @@ namespace Cosmos
 
 	private:
 
-		Demo* mDemo = nullptr;
-		Grid* mGrid = nullptr;
+		Dockspace* mDockspace = nullptr;
+		Viewport* mViewport = nullptr;
 	};
 }

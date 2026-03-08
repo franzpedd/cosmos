@@ -5,7 +5,7 @@ int main(int argc, char** argv)
 {
 	Cosmos::ApplicationBase::CreateInfo ci = { 0 };
 	ci.appName = "Cosmos Editor";
-	ci.customViewport = false;
+	ci.customViewport = true;
 	ci.validations = true;
 	ci.fullscreen = false;
 	ci.vsync = false;

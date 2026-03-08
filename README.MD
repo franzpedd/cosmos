@@ -30,7 +30,7 @@ The solution files (depending on your current system) will be generated under "B
 ## Project: Editor (Desktop)
 As development goes I'll try to update visually on how the project is, features, tests and releases. Currently there isn't much to show.
 The grid system is implemented (initial stage).
-![img](Docs/img/progress1.png)
+![img](Docs/img/progress3.png)
 
 ## Project: Rescalc (Android/Desktop)
 This project is just a simple working example of a resistor calculator, the code used on both android and desktop is the same, not similar.

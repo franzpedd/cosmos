@@ -29,8 +29,8 @@ set(SOURCES
     Source/Core/Editor.h            Source/Core/Editor.cpp
 
     # UI
-    Source/UI/Demo.h                Source/UI/Demo.cpp
-    Source/UI/Grid.h                Source/UI/Grid.cpp
+    Source/UI/Dockspace.h           Source/UI/Dockspace.cpp
+    Source/UI/Viewport.h            Source/UI/Viewport.cpp
 
     # Entrypoint
     Source/main.cpp

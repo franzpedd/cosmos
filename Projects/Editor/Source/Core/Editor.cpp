@@ -1,7 +1,7 @@
 #include "Editor.h"
 
-#include "UI/Demo.h"
-#include "UI/Grid.h"
+#include "UI/Dockspace.h"
+#include "UI/Viewport.h"
 
 namespace Cosmos
 {
@@ -9,17 +9,17 @@ namespace Cosmos
 		: ApplicationBase(info)
 	{
 		// adding widgets
-		mDemo = new Demo(this);
-		GetGUI()->AddWidget(mDemo);
+		mDockspace = new Dockspace(this);
+		GetGUI()->AddWidget(mDockspace);
 
-		mGrid = new Grid(this);
-		GetGUI()->AddWidget(mGrid);
+		mViewport = new Viewport(this);
+		GetGUI()->AddWidget(mViewport);
 	}
 
 	Editor::~Editor()
 	{
-		delete mGrid;
-		delete mDemo;
+		delete mViewport;
+		delete mDockspace;
 	}
 
 	void Editor::OnMinimize()

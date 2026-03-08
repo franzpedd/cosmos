@@ -4,15 +4,15 @@
 
 namespace Cosmos
 {
-    class Demo : public WidgetBase
+    class Dockspace : public WidgetBase
     {
     public:
 
         /// @brief constructor
-        Demo(ApplicationBase* app);
+        Dockspace(ApplicationBase* app);
 
         /// @brief destructor
-        virtual ~Demo();
+        virtual ~Dockspace();
 
     public:
 
