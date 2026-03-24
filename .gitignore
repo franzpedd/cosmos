@@ -1,0 +1,7 @@
+# Extensions to ignore
+
+# Paths to ignore
+Build/
+Thirdparty/evk
+Thirdparty/sdl
+Thirdparty/imgui

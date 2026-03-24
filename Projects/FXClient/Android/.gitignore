@@ -1,0 +1,8 @@
+# paths
+.gradle
+.idea
+app/.cxx
+app/build
+
+# files
+local.properties
