@@ -35,19 +35,19 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 set(SDL_DISABLE_PCH ON CACHE BOOL "Disable precompiled headers")
 set(BUILD_AS_DLL ON CACHE BOOL "Build shared libraries" FORCE)
 add_subdirectory(
-        ../../../../../../Thirdparty/sdl
+        ../../../../../../../Thirdparty/sdl
         ${CMAKE_CURRENT_BINARY_DIR}/sdl
 )
 
 # Import ImGui (Shared Library)
 add_subdirectory(
-        ../../../../../../Thirdparty/imgui
+        ../../../../../../../Thirdparty/imgui
         ${CMAKE_CURRENT_BINARY_DIR}/imgui
 )
 
 # Import Engine (Shared Library)
 add_subdirectory(
-        ../../../../../../Engine
+        ../../../../../../../Engine
         ${CMAKE_CURRENT_BINARY_DIR}/Engine
 )
 
@@ -67,7 +67,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add libraries directories for searching code definition
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-        ../../../../../../Engine/Source
-        ../../../../../../Thirdparty/evk/EVK
-        ../../../../../../Thirdparty/evk/EVK/Thirdparty
+        ../../../../../../../Engine/Source
+        ../../../../../../../Thirdparty/evk/EVK
+        ../../../../../../../Thirdparty/evk/EVK/Thirdparty
 )

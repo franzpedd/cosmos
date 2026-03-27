@@ -56,8 +56,8 @@ set(SOURCES
 add_group(${SOURCES})
 add_library(Engine SHARED ${SOURCES})
 
-target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Engine/Source ${CMAKE_SOURCE_DIR}/Thirdparty)
-target_include_directories(Engine PUBLIC ${CMAKE_SOURCE_DIR}/Thirdparty/evk/EVK ${CMAKE_SOURCE_DIR}/Thirdparty/evk/EVK/Thirdparty)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Source ${CMAKE_CURRENT_SOURCE_DIR}/../Thirdparty)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../Thirdparty/evk/EVK ${CMAKE_CURRENT_SOURCE_DIR}/../Thirdparty/evk/EVK/Thirdparty)
 
 target_compile_definitions(Engine PRIVATE VECMATH_BUILD_SHARED VECMATH_EXPORT)
 target_compile_definitions(Engine PRIVATE CTOOLBOX_BUILD_SHARED CTOOLBOX_EXPORT)
@@ -99,9 +99,11 @@ if(ANDROID)
 endif()
 
 # copy the SDL3 into the build folder
-add_custom_command(TARGET Engine POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "$<TARGET_FILE:SDL3::SDL3>"
-        "$<TARGET_FILE_DIR:Engine>"
-    VERBATIM
-)
+if(NOT ANDROID)
+    add_custom_command(TARGET Engine POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "$<TARGET_FILE:SDL3::SDL3>"
+            "$<TARGET_FILE_DIR:Engine>"
+        VERBATIM
+    )
+endif()

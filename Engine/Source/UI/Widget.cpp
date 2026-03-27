@@ -1,4 +1,4 @@
-#include "UI/Widget.h"
+#include "Widget.h"
 
 #include "UI/GUI.h"
 

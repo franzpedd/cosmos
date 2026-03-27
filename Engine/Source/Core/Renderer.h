@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Defines.h"
+#include "Defines.h"
 #include "Util/ID.h"
 
 /// @brief forward declarations
