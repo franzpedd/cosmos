@@ -97,7 +97,7 @@ namespace Cosmos
 
 	void Renderer::OnMaximize()
 	{
-		LOG_TO_TERMINAL(Logger::Todo, "Implement on EVK's side?");
+		LOG_TO_TERMINAL(Logger::Todo, "Implement on EVK's side? At least the aspect-ratio");
 	}
 
 	void Renderer::OnRestore()

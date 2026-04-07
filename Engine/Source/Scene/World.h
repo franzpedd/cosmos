@@ -7,6 +7,7 @@
 
 /// @brief forward declarations
 namespace Cosmos { class Entity; }
+namespace Cosmos { class GUI; }
 namespace Cosmos { class Renderer; }
 
 namespace Cosmos
@@ -16,7 +17,7 @@ namespace Cosmos
     public:
 
         /// @brief constructor
-        World(Renderer* renderer, const char* name);
+        World(GUI* gui, Renderer* renderer, const char* name);
 
         /// @brief destructor
         ~World();
@@ -66,7 +67,8 @@ namespace Cosmos
         bool TransferEntity(ID id, World& another);
 
     private:
-
+        
+        GUI* mGUI = nullptr;
         Renderer* mRenderer = nullptr;
         char mName[32];
         Library<ID, Entity*> mEntities = { };

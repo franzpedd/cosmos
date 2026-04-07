@@ -37,6 +37,9 @@ namespace Cosmos
 
 		ApplicationBase* mApp = nullptr;
 
+		float2 mViewportSize;
+		ImVec2 mWindowSize;
+
 		struct Grid
 		{
 		public:

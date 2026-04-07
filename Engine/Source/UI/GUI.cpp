@@ -21,6 +21,8 @@ static ImGuiContext* g_Context = nullptr;
 static ImFont* g_IconFA = nullptr;
 static ImFont* g_IconLC = nullptr;
 static ImFont* g_RobotoMono = nullptr;
+static float g_TextFontSize = 13.0f;
+static float g_IconFontSize = 18.0f;
 
 namespace Cosmos
 {
@@ -78,8 +80,8 @@ namespace Cosmos
 		info.Device = evk_get_device();
 		info.QueueFamily = evk_get_graphics_queue_family();
 		info.Queue = evk_get_graphics_queue();
-		info.DescriptorPool = VK_NULL_HANDLE;
-		info.DescriptorPoolSize = 128; // arbitrary value, must be > 0
+		//info.DescriptorPool = evk_get_ui_descriptor_pool();
+		info.DescriptorPoolSize = 100; // arbitrary value, must be > 0
 		info.MinImageCount = evk_get_swapchain_image_count();
 		info.ImageCount = evk_get_swapchain_image_count();
 		info.PipelineCache = VK_NULL_HANDLE;
@@ -95,16 +97,16 @@ namespace Cosmos
 
 		// fonts
 		constexpr const ImWchar iconRanges[] = { ICON_MIN_LC, ICON_MAX_LC, 0 };
-		float iconSize = 13.0f * GetFontScalar();
-		float fontSize = 18.0f * GetFontScalar();
+		g_IconFontSize = 13.0f * GetFontScalar();
+		g_TextFontSize = 18.0f * GetFontScalar();
 
 		ImFontConfig iconCFG;
 		iconCFG.MergeMode = true;
-		iconCFG.GlyphMinAdvanceX = iconSize;
+		iconCFG.GlyphMinAdvanceX = g_IconFontSize;
 		iconCFG.PixelSnapH = true;
 
-		g_RobotoMono = io.Fonts->AddFontFromMemoryCompressedTTF(txt_robotomono_medium_compressed_data, txt_robotomono_medium_compressed_size, fontSize);
-		g_IconLC = io.Fonts->AddFontFromMemoryCompressedTTF(icon_lucide_compressed_data, icon_lucide_compressed_size, iconSize, &iconCFG, iconRanges);
+		g_RobotoMono = io.Fonts->AddFontFromMemoryCompressedTTF(txt_robotomono_medium_compressed_data, txt_robotomono_medium_compressed_size, g_TextFontSize);
+		g_IconLC = io.Fonts->AddFontFromMemoryCompressedTTF(icon_lucide_compressed_data, icon_lucide_compressed_size, g_IconFontSize, &iconCFG, iconRanges);
 		io.Fonts->Build();
 
 		SetStyle(style);
@@ -124,6 +126,16 @@ namespace Cosmos
 	void* GUI::GetImGuiContext()
 	{
 		return g_Context;
+	}
+
+	float GUI::GetTextFontSize()
+	{
+		return g_TextFontSize * GetFontScalar();
+	}
+
+	float GUI::GetIconFontSize()
+	{
+		return g_IconFontSize * GetFontScalar();
 	}
 
 	float GUI::GetFontScalar()
@@ -208,16 +220,26 @@ namespace Cosmos
 
 	void GUI::ToggleCursor()
 	{
-		mCursorVisible = !mCursorVisible;
-
 		ImGuiIO& io = ImGui::GetIO();
-		if (mCursorVisible) {
-			io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
-			io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
-			return;
+		if (io.ConfigFlags & ImGuiConfigFlags_NoMouse) {
+			io.ConfigFlags &= ~ImGuiConfigFlags_NoMouse;   // enable mouse input
 		}
+		else {
+			io.ConfigFlags |= ImGuiConfigFlags_NoMouse;    // disable mouse input
+		}
+	}
 
-		io.ConfigFlags ^= ImGuiConfigFlags_NoMouse;
+	void GUI::AddDescriptorImage(const char* key, void* sampler, void* view)
+	{
+		if (mDescriptorImages.Contains(key)) return;
+
+		VkDescriptorSet descriptorSet = ImGui_ImplVulkan_AddTexture((VkSampler)sampler, (VkImageView)view, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+		mDescriptorImages.Insert(key, descriptorSet);
+	}
+
+	void* GUI::GetDescriptorImage(const char* key)
+	{
+		return mDescriptorImages.Get(key).value_or(nullptr);
 	}
 
 	void GUI::OnMinimize()

@@ -7,6 +7,11 @@
 
 namespace Cosmos::Widget
 {
+	COSMOS_API void Separator(bool vertical, float thickness)
+	{
+		ImGui::SeparatorEx(vertical == true ? ImGuiSeparatorFlags_Vertical : ImGuiSeparatorFlags_Horizontal, thickness);
+	}
+
 	COSMOS_API void TextCentered(const char* fmt, ...)
 	{
 		auto windowWidth = ImGui::GetWindowSize().x;
@@ -19,13 +24,12 @@ namespace Cosmos::Widget
 		va_end(args);
 	}
 
-	COSMOS_API void FloatControl(const char* label, float* value)
+	COSMOS_API bool FloatControl(const char* label, float* value)
 	{
 		ImGui::PushID(label);
+		bool modified = false;
 
 		constexpr ImVec4 colorX = ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f };
-		constexpr ImVec4 colorY = ImVec4{ 0.25f, 0.7f, 0.2f, 1.0f };
-		constexpr ImVec4 colorZ = ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f };
 
 		// x
 		{
@@ -33,28 +37,30 @@ namespace Cosmos::Widget
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorX);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorX);
 
-			ImGui::SmallButton("X");
+			ImGui::Button("X");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##X", value, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##X", value, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
 
 		ImGui::NewLine();
-
 		ImGui::PopID();
+
+		return modified;
 	}
 
-	COSMOS_API void Float2Control(const char* label, float* x, float* y)
+	COSMOS_API bool Float2Control(const char* label, float* x, float* y)
 	{
 		ImGui::PushID(label);
+		bool modified = false;
 
 		constexpr ImVec4 colorX = ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f };
 		constexpr ImVec4 colorY = ImVec4{ 0.25f, 0.7f, 0.2f, 1.0f };
-		constexpr ImVec4 colorZ = ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f };
 
 		// x
 		{
@@ -62,15 +68,18 @@ namespace Cosmos::Widget
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorX);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorX);
 
-			ImGui::SmallButton("X");
+			ImGui::Button("X");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##X", x, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##X", x, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
+
+		ImGui::SameLine();
 
 		// y
 		{
@@ -78,24 +87,27 @@ namespace Cosmos::Widget
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorY);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorY);
 
-			ImGui::SmallButton("Y");
+			ImGui::Button("Y");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##Y", y, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##Y", y, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
 
 		ImGui::NewLine();
-
 		ImGui::PopID();
+
+		return modified;
 	}
 
-	COSMOS_API void Float3Controller(const char* label, float* x, float* y, float* z)
+	COSMOS_API bool Float3Control(const char* label, float* x, float* y, float* z)
 	{
 		ImGui::PushID(label);
+		bool modified = false;
 
 		constexpr ImVec4 colorX = ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f };
 		constexpr ImVec4 colorY = ImVec4{ 0.25f, 0.7f, 0.2f, 1.0f };
@@ -103,20 +115,22 @@ namespace Cosmos::Widget
 
 		// x
 		{
-
 			ImGui::PushStyleColor(ImGuiCol_Button, colorX);
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorX);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorX);
 
-			ImGui::SmallButton("X");
+			ImGui::Button("X");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##X", x, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##X", x, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
+
+		ImGui::SameLine();
 
 		// y
 		{
@@ -124,15 +138,18 @@ namespace Cosmos::Widget
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorY);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorY);
 
-			ImGui::SmallButton("Y");
+			ImGui::Button("Y");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##Y", y, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##Y", y, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
+
+		ImGui::SameLine();
 
 		// z
 		{
@@ -140,19 +157,20 @@ namespace Cosmos::Widget
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorZ);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorZ);
 
-			ImGui::SmallButton("Z");
+			ImGui::Button("Z");
 			ImGui::SameLine();
-			ImGui::PushItemWidth(50);
-			ImGui::DragFloat("##Z", z, 0.1f, 0.0f, 0.0f, "%.2f");
-			ImGui::SameLine();
+			ImGui::PushItemWidth(60);
+			if (ImGui::DragFloat("##Z", z, 0.1f, 0.0f, 0.0f, "%.2f")) {
+				modified = true;
+			}
 			ImGui::PopItemWidth();
 
 			ImGui::PopStyleColor(3);
 		}
 
-		ImGui::NewLine();
-
 		ImGui::PopID();
+
+		return modified;
 	}
 
 	COSMOS_API void VerticalSeparator(float thickness)

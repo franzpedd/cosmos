@@ -19,7 +19,7 @@ namespace Cosmos
         mWindow = new Window(this, info.appName, info.width, info.height, info.fullscreen);
         mRenderer = new Renderer(this, info.appName, info.width, info.height, info.customViewport, info.vsync);
         mGUI = new GUI(this);
-        mWorld = new World(mRenderer, "Default World");
+        mWorld = new World(mGUI, mRenderer, "Default World");
 	}
 
     ApplicationBase::~ApplicationBase()
@@ -85,6 +85,7 @@ namespace Cosmos
             int updateCount = 0;
             while (accumulator >= FIXED_TIMESTEP && updateCount < MAX_UPDATES) {
                 mRenderer->Update(FIXED_TIMESTEP);
+                mWorld->Update(FIXED_TIMESTEP);
                 accumulator -= FIXED_TIMESTEP;
                 updateCount++;
             }

@@ -3,6 +3,7 @@
 #include "Core/Defines.h"
 #include "Core/Input.h"
 #include "Util/Container.h"
+#include "Util/Library.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
 
@@ -32,8 +33,16 @@ namespace Cosmos
 		/// @brief returns the imgui context
 		static void* GetImGuiContext();
 
+		/// @brief returns the text font size, useful for adjusting UI text
+		static float GetTextFontSize();
+
+		/// @brief returns the icon font Y size, useful for adjusting UI text
+		static float GetIconFontSize();
+
 		/// @brief returns the font scalar for creating ui widgets, on android things should be larger than desktop
 		static float GetFontScalar();
+
+		
 
 	public:
 
@@ -57,6 +66,12 @@ namespace Cosmos
 
 		/// @brief enables/disables the cursor
 		void ToggleCursor();
+
+		/// @brief adds an image 
+		void AddDescriptorImage(const char* key, void* sampler, void* view);
+
+		/// @brief returns the descriptor set via it's key
+		void* GetDescriptorImage(const char* key);
 
     public:
 
@@ -110,7 +125,7 @@ namespace Cosmos
     private:
 
 		ApplicationBase* mApp = nullptr;
-		bool mCursorVisible = true;
 		DualContainer<WidgetBase*> mWidgets;
+		Library<const char*, void*> mDescriptorImages;
     };
 }

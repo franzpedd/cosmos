@@ -22,15 +22,17 @@ namespace Cosmos
 		/// @brief updates the renders
 		virtual void Render() override;
 
-	public:
+	private:
 
-		/// @brief displays the entity propertie
-		void ShowEntitySettingsPopup(Entity* entity);
+		/// @brief testing a layout
+		void DisplayTest();
 
 	private:
 
 		ApplicationBase* mApp = nullptr;
 		bool mShowSettingsWindow = false;
-		Entity* mEntitySettings = nullptr;
+		Entity* mSelectedEntity = nullptr;
+
+		std::vector<Entity*> mOpenedEntities;
 	};
 }

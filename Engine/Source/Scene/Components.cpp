@@ -61,10 +61,10 @@ namespace Cosmos
 		}
 	}
 
-	SpriteComponent::SpriteComponent(uint32_t id)
+	SpriteComponent::SpriteComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png")
 		: id(id)
 	{
-		sprite = evk_sprite_create_from_path("Assets/Texture/icon_entity.png", id);
+		sprite = evk_sprite_create_from_path(path, id);
 	}
 
 	SpriteComponent::~SpriteComponent()
@@ -80,4 +80,21 @@ namespace Cosmos
 	{
 	}
 
+	BillboardComponent::BillboardComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png")
+	{
+		billboard = evk_billboard_create_from_path(path, id);
+	}
+
+	BillboardComponent::~BillboardComponent()
+	{
+		if (billboard) { evk_billboard_destroy(billboard); }
+	}
+
+	void BillboardComponent::Save(Entity* entity, Datafile& datafile)
+	{
+	}
+
+	void BillboardComponent::Load(Entity* entity, Datafile& datafile)
+	{
+	}
 }

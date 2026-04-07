@@ -48,7 +48,7 @@ namespace Cosmos
     public:
 
         /// @brief constructor
-        SpriteComponent(uint32_t id);
+        SpriteComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png");
 
         /// @brief destructor
         ~SpriteComponent();
@@ -61,7 +61,27 @@ namespace Cosmos
 
     public:
         evkSprite* sprite = nullptr;
-        bool visible = true;
+        uint32_t id = 0;
+    };
+
+    struct COSMOS_API BillboardComponent
+    {
+    public:
+
+        /// @brief constructor
+        BillboardComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png");
+
+        /// @brief destructor
+        ~BillboardComponent();
+
+        /// @brief saves the transform component of an entity into a datafile
+        static void Save(Entity* entity, Datafile& datafile);
+
+        /// @brief loads the transform component of an entity from a datafile
+        static void Load(Entity* entity, Datafile& datafile);
+
+    public:
+        evkBillboard* billboard = nullptr;
         uint32_t id = 0;
     };
 }

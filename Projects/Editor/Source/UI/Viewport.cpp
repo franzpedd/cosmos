@@ -18,21 +18,21 @@ namespace Cosmos
 		// viewport
 		if (ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
 		{
-			ImVec2 topPivotPos = ImGui::GetCursorScreenPos();
-			evkViewportRenderphase* phase = (evkViewportRenderphase*)evk_get_renderphase(evk_Renderphase_Type_Viewport);
-			ImGui::Image((ImTextureID)phase->descriptorSet, ImGui::GetContentRegionAvail());
-			ImVec2 botPivotPos = ImGui::GetCursorScreenPos();
-
-			// this is not ideal, only resize if size actually changed and different from last set
-			static float2 lastVpSize = evk_get_viewport_size();
-			float2 currentVpSize = evk_get_viewport_size();
-			ImVec2 windowSize = ImGui::GetWindowSize();
-
-			if ((currentVpSize.xy.x != windowSize.x || currentVpSize.xy.y != windowSize.y) && (lastVpSize.xy.x != windowSize.x || lastVpSize.xy.y != windowSize.y)) {
-				evk_set_viewport_size({ windowSize.x, windowSize.y });
-				lastVpSize = { windowSize.x, windowSize.y };
+			// handle resize
+			mWindowSize = ImGui::GetWindowSize();
+			mViewportSize = evk_get_viewport_size();
+			if (mViewportSize.xy.x != mWindowSize.x || mViewportSize.xy.y != mWindowSize.y) {
+				evk_set_viewport_size({ mWindowSize.x, mWindowSize.y });
+				evk_camera_set_aspect_ratio(evk_get_main_camera(), mWindowSize.x / mWindowSize.y);
 			}
 
+			ImVec2 topPivotPos = ImGui::GetCursorScreenPos();
+
+			evkViewportRenderphase* phase = (evkViewportRenderphase*)evk_get_renderphase(evk_Renderphase_Type_Viewport);
+			ImGui::Image((ImTextureID)phase->descriptorSet, ImGui::GetContentRegionAvail());
+			
+			ImVec2 botPivotPos = ImGui::GetCursorScreenPos();
+			
 			DrawContextButtonMenu();
 			DrawTopMenu(ImVec2{ topPivotPos.x + 3.0f, topPivotPos.y + 3.0f });
 			DrawBottomMenu(ImVec2{ botPivotPos.x + ImGui::GetContentRegionAvail().x - 90.0f, botPivotPos.y - 25.0f });
@@ -79,7 +79,7 @@ namespace Cosmos
 		bool shouldAppear = true; // this will obviously change when more windows appear, or not, just a placeholder
 		if (!shouldAppear) return;
 
-		if (ImGui::BeginPopupContextWindow("##ViewportLeftClick"))
+		if (ImGui::BeginPopupContextWindow("##ViewportLeftClick", ImGuiPopupFlags_MouseButtonRight))
 		{
 			if (ImGui::MenuItem("Add Entity"))
 			{

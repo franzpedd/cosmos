@@ -81,6 +81,11 @@ namespace Cosmos
 
 namespace Cosmos::Widget
 {
+	/// @brief forces creates a | or a _ on the current context
+	/// @param vertical makes the separator vertical
+	/// @param thickness how thick the separator is, 1.0f is the default
+	COSMOS_API void Separator(bool vertical = false, float thickness = 1.0f);
+
 	/// @brief centered text in the window
 	/// @param fmt va_arglist to format the text
 	COSMOS_API void TextCentered(const char* fmt, ...);
@@ -107,20 +112,20 @@ namespace Cosmos::Widget
 	/// @brief custom float controller
 	/// @param label label control text
 	/// @param x controller value
-	COSMOS_API void FloatControl(const char* label, float* value);
+	COSMOS_API bool FloatControl(const char* label, float* value);
 
 	/// @brief custom 2d float controller
 	/// @param label label control text
 	/// @param x first controller value
 	/// @param y second controller value
-	COSMOS_API void Float2Control(const char* label, float* x, float* y);
+	COSMOS_API bool Float2Control(const char* label, float* x, float* y);
 
 	/// @brief custom 3d float controller
 	/// @param label label control text
 	/// @param x first controller value
 	/// @param y second controller value
 	/// @param z third controller value
-	COSMOS_API void Float3Controller(const char* label, float* x, float* y, float* z);
+	COSMOS_API bool Float3Control(const char* label, float* x, float* y, float* z);
 
 	/// @brief draws a button with custom color when selected
 	/// @param label label control text

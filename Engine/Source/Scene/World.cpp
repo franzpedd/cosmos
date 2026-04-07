@@ -2,13 +2,14 @@
 
 #include "Core/Renderer.h"
 #include "Core/Logger.h"
+#include "UI/GUI.h"
 #include "Scene/Entity.h"
 #include "Scene/Components.h"
 
 namespace Cosmos
 {
-    World::World(Renderer* renderer, const char* name)
-        : mRenderer(renderer)
+    World::World(GUI* gui, Renderer* renderer, const char* name)
+        : mGUI(gui), mRenderer(renderer)
     {
         SetName(name);
     }
@@ -20,7 +21,16 @@ namespace Cosmos
 
     void World::Update(float timestep)
     {
-        // nothing to do right now
+        for (auto& [id, entity] : mEntities)
+        {
+            // sprite
+            SpriteComponent* sprite = entity->GetComponent<SpriteComponent>();
+            if (sprite) {
+                if (sprite->sprite) {
+                    evk_sprite_update(sprite->sprite, false);
+                }
+            }
+        }
     }
 
     void World::Render(float timestep)
@@ -32,7 +42,7 @@ namespace Cosmos
             // visibility
             VisibilityComponent* visibility = entity->GetComponent<VisibilityComponent>();
             if (!visibility) continue;
-            if(!visibility->visible) continue;
+            if (!visibility->visible) continue;
 
             // transform
             TransformComponent* transform = entity->GetComponent<TransformComponent>();
@@ -41,7 +51,7 @@ namespace Cosmos
             // sprite
             SpriteComponent* sprite = entity->GetComponent<SpriteComponent>();
             if (sprite) {
-                if (sprite->sprite && sprite->visible) {
+                if (sprite->sprite) {
                     evk_sprite_render(sprite->sprite);
                 }
             }
@@ -94,8 +104,10 @@ namespace Cosmos
 
         // modify components
         evkSprite* sprite = ent->GetComponent<SpriteComponent>()->sprite;
-        evk_sprite_set_translation(sprite, pos);
+        evkTexture2D* albedo = evk_sprite_get_albedo(sprite);
+        evk_sprite_set_translation(sprite, pos);  
         evk_sprite_set_scale(sprite, { 0.25f, 0.25f });
+        mGUI->AddDescriptorImage(evk_texture2d_get_path(albedo), evk_texture2d_get_sampler(albedo), evk_texture2d_get_view(albedo));
 
         if (!mEntities.Insert(id, ent)) {
             LOG_TO_TERMINAL(Logger::Error, "Error while creating entity '%s'. Unable to insert entity on world entity library.", name);
