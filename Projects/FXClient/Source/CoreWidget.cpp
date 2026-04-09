@@ -32,7 +32,7 @@ namespace Cosmos
 
     void CoreWidget::Update()
     {
-        float2 size = mApp->GetWindow()->GeSize();
+        float2 size = mApp->GetWindow()->GetSize();
         float2 pos = mApp->GetWindow()->GetPos();
         ImGui::SetNextWindowPos(ImVec2(pos.xy.x, pos.xy.y));
         ImGui::SetNextWindowSize(ImVec2(size.xy.x, size.xy.y));

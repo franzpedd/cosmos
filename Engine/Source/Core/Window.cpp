@@ -194,7 +194,7 @@ namespace Cosmos
 		mCursorVisible = !mCursorVisible;
 	}
 
-	float2 Window::GeSize()
+	float2 Window::GetSize()
 	{
 		int width, height;
 		SDL_GetWindowSize(mNativeWindow, &width, &height);

@@ -30,7 +30,7 @@ namespace Cosmos
         if (!mApp) return;
 
         // set's set a ui-widget-window that covers the framebuffer entirely
-        float2 size = mApp->GetWindow()->GeSize();
+        float2 size = mApp->GetWindow()->GetSize();
         float2 pos = mApp->GetWindow()->GetPos();
         ImGui::SetNextWindowPos(ImVec2(pos.xy.x, pos.xy.y));
         ImGui::SetNextWindowSize(ImVec2(size.xy.x, size.xy.y));

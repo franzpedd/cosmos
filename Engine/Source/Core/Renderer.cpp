@@ -10,7 +10,7 @@
 
 namespace Cosmos
 {
-	Renderer::Renderer(ApplicationBase* app, const char* appName, uint32_t width, uint32_t height, bool viewport, bool vsync)
+	Renderer::Renderer(ApplicationBase* app, const char* appName, uint32_t width, uint32_t height, bool viewport, bool vsync, bool validations)
 		: mApp(app)
 	{
         evkCreateInfo info = { 0 };
@@ -23,6 +23,7 @@ namespace Cosmos
 		info.MSAA = evk_Msaa_X4;
 		info.vsync = vsync;
         info.viewport = viewport;
+		info.validations = validations;
 
         // platform specific window
 		#ifdef _WIN32

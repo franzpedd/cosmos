@@ -61,7 +61,7 @@ namespace Cosmos
 		}
 	}
 
-	SpriteComponent::SpriteComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png")
+	SpriteComponent::SpriteComponent(uint32_t id, const char* path)
 		: id(id)
 	{
 		sprite = evk_sprite_create_from_path(path, id);
@@ -80,7 +80,7 @@ namespace Cosmos
 	{
 	}
 
-	BillboardComponent::BillboardComponent(uint32_t id, const char* path = "Assets/Texture/icon_entity.png")
+	BillboardComponent::BillboardComponent(uint32_t id, const char* path)
 	{
 		billboard = evk_billboard_create_from_path(path, id);
 	}

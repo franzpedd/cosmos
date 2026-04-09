@@ -59,7 +59,7 @@ namespace Cosmos
 	public:
 
 		/// @brief returns the window's size
-		float2 GeSize();
+		float2 GetSize();
 		
 		/// @brief returns the window's pivot position
 		float2 GetPos();

@@ -13,7 +13,7 @@ namespace Cosmos
     public:
 
         /// @brief constructor
-        Renderer(ApplicationBase* app, const char* appName, uint32_t width, uint32_t height, bool viewport, bool vsync);
+        Renderer(ApplicationBase* app, const char* appName, uint32_t width, uint32_t height, bool viewport, bool vsync, bool validations);
 
         /// @brief destructor
         ~Renderer();

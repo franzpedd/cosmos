@@ -52,11 +52,11 @@ namespace Cosmos
 	};
 
 	/// @brief outputs the log message to a file
-	#define LOG_TO_FILE(severity, filepath, ...) Logger::ToFile(severity, filepath, __FILE__, __LINE__, __VA_ARGS__);
+	#define LOG_TO_FILE(severity, filepath, ...) Cosmos::Logger::ToFile(severity, filepath, __FILE__, __LINE__, __VA_ARGS__);
 
 	/// @brief outputs the log message as an assertion
-	#define LOG_ASSERT(x, ...) { if(!(x)) { Logger::ToTerminal(Logger::Severity::Assert, __FILE__, __LINE__, __VA_ARGS__); std::abort();}}
+	#define LOG_ASSERT(x, ...) { if(!(x)) { Cosmos::Logger::ToTerminal(Logger::Severity::Assert, __FILE__, __LINE__, __VA_ARGS__); std::abort();}}
 
 	/// @brief outputs the log message to the terminal
-	#define LOG_TO_TERMINAL(severity, ...) Logger::ToTerminal(severity, __FILE__, __LINE__, __VA_ARGS__);
+	#define LOG_TO_TERMINAL(severity, ...) Cosmos::Logger::ToTerminal(severity, __FILE__, __LINE__, __VA_ARGS__);
 }

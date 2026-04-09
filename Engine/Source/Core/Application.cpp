@@ -17,7 +17,7 @@ namespace Cosmos
         : mAssetsPath(info.assetsPath)
 	{
         mWindow = new Window(this, info.appName, info.width, info.height, info.fullscreen);
-        mRenderer = new Renderer(this, info.appName, info.width, info.height, info.customViewport, info.vsync);
+        mRenderer = new Renderer(this, info.appName, info.width, info.height, info.customViewport, info.vsync, info.validations);
         mGUI = new GUI(this);
         mWorld = new World(mGUI, mRenderer, "Default World");
 	}
