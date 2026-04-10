@@ -2,11 +2,13 @@
 
 #include "MainWidget.h"
 
-namespace Cosmos
+namespace Cosmos::Agenda
 {
-	Application::Application(const ApplicationBase::CreateInfo& ci)
+	Application::Application(const Cosmos::ApplicationBase::CreateInfo& ci)
 		: ApplicationBase(ci)
 	{
+		GetGUI()->SetStyle(Cosmos::GUI::Style::Light);
+
 		mMainWidget = new MainWidget(this);
 		GetGUI()->AddWidget(mMainWidget);
 	}

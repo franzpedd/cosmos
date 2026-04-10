@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 	ci.width = 1366;
 	ci.height = 728;
 	
-	Cosmos::Application app(ci);
+	Cosmos::Agenda::Application app(ci);
 	app.Run();
 
 	return 0;

@@ -68,7 +68,9 @@ namespace Cosmos
 
 		/// @brief returns the average frames per second
 		inline float GetAverageFPS() const { return mAverageFPS; }
-		
+
+		/// @brief returns the initial passed assets path
+		inline const char* GetAssetsPath() const { return mAssetsPath; }
 
 	public:
 

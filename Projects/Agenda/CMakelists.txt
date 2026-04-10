@@ -28,6 +28,7 @@ set(SOURCES
     # Core
     Source/Application.h    Source/Application.cpp
     Source/MainWidget.h     Source/MainWidget.cpp
+    Source/Util.h           Source/Util.cpp
 
     # Entrypoint
     Source/main.cpp

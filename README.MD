@@ -50,6 +50,12 @@ This project is just an unfinished example of a project, in the future it'll inc
     <img src="Docs/img/FXClient_Android.png" alt="ResCalc" width="40%">
 </p>
 
+## Project: Agenda (Desktop)
+This project is just a example of a calendar application, with data serialization/deserialization for persistent data between app closing/opening. I'll attempt to use it myself.
+<p align="center">
+    <img src="Docs/img/Agenda_Win32.png" alt="Agenda" width="40%">
+</p>
+
 ## License and Thirdparty
 As Cosmos itself embraces other projects you must be aware their license as well. They are all permissive enough for redistribution, selling and modifing without any issue (just proper credits).
 

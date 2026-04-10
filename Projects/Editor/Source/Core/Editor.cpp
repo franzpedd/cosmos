@@ -9,6 +9,7 @@ namespace Cosmos
 	Editor::Editor(const ApplicationBase::CreateInfo& info)
 		: ApplicationBase(info)
 	{
+
 		// adding widgets
 		mDockspace = new Dockspace(this);
 		GetGUI()->AddWidget(mDockspace);

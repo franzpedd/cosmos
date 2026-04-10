@@ -3,16 +3,16 @@
 #include <Engine.h>
 
 /// @brief forward declarations
-namespace Cosmos { class MainWidget; }
+namespace Cosmos::Agenda { class MainWidget; }
 
-namespace Cosmos
+namespace Cosmos::Agenda
 {
-	class Application : public ApplicationBase
+	class Application : public Cosmos::ApplicationBase
 	{
 	public:
 
 		/// @brief constructor
-		Application(const ApplicationBase::CreateInfo& ci);
+		Application(const Cosmos::ApplicationBase::CreateInfo& ci);
 
 		/// @brief destructor
 		virtual ~Application();

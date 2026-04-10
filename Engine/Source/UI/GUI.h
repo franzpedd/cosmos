@@ -19,7 +19,7 @@ namespace Cosmos
 
 		enum Style
 		{
-			Classic = 0, GoldSrc, Darkish
+			Classic = 0, Darkish, Dark, Light, Sunset, PurpleHaze, GoldSrc
 		};
 
     public:
@@ -42,7 +42,8 @@ namespace Cosmos
 		/// @brief returns the font scalar for creating ui widgets, on android things should be larger than desktop
 		static float GetFontScalar();
 
-		
+		/// @brief returns the current gui style
+		inline Style GetCurrentStyle() { return mCurrentStyle; };
 
 	public:
 
@@ -116,16 +117,29 @@ namespace Cosmos
 		/// @brief sets a style to the gui
 		void SetStyle(Style style);
 
-		/// @brief GoldSrc inspired style
-		void SetGoldSrcTheme();
-
 		/// @brief Darkish theme
 		void SetDarkishTheme();
+
+		/// @brief Dark theme
+		void SetDarkTheme();
+
+		/// @brief Light theme
+		void SetLightTheme();
+
+		/// @brief Sunset theme
+		void SetSunsetTheme();
+
+		/// @brief PurpleHaze theme
+		void SetPurpleHazeTheme();
+
+		/// @brief GoldSrc inspired style
+		void SetGoldSrcTheme();
 
     private:
 
 		ApplicationBase* mApp = nullptr;
 		DualContainer<WidgetBase*> mWidgets;
 		Library<const char*, void*> mDescriptorImages;
+		Style mCurrentStyle = Classic;
     };
 }

@@ -93,4 +93,22 @@ namespace Cosmos
 
         snprintf(out, outSize,"%04lld-%02lld-%02lld %02lld:%02lld",(long long)year, (long long)month, (long long)day, (long long)hour, (long long)minute);
     }
+
+    /// @brief returns the current month number (1-12)
+    COSMOS_API inline int GetMonthNumber()
+    {
+        auto now = std::chrono::system_clock::now();
+        std::time_t time = std::chrono::system_clock::to_time_t(now);
+        std::tm* local = std::localtime(&time);
+        return local->tm_mon + 1;
+    }
+
+    /// @brief returns the current year in number
+    COSMOS_API inline int GetYearNumber()
+    {
+        auto now = std::chrono::system_clock::now();
+        std::time_t time = std::chrono::system_clock::to_time_t(now);
+        std::tm* local = std::localtime(&time);
+        return local->tm_year + 1900;
+    }
 }
