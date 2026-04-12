@@ -1,7 +1,9 @@
 # Extensions to ignore
 
 # Paths to ignore
-Build/
+Build/**
 Thirdparty/evk
 Thirdparty/sdl
 Thirdparty/imgui
+Projects/FXClient/Android/build
+Projects/ResCalc/Android/build

@@ -8,7 +8,7 @@ namespace Cosmos::Agenda
     {
         mPickerColor[0] = mPickerColor[1] = mPickerColor[2] = mPickerColor[3] = 1.0f;
 
-        std::string datafilePath = std::filesystem::path(mApp->GetAssetsPath()).append("datafile.json").string();
+        std::string datafilePath = std::filesystem::path(mApp->GetAssetsPath()).append("agenda.data").string();
         if (std::filesystem::exists(datafilePath)) {
             Datafile::Read(mNotesDF, datafilePath);
             LoadNotesFromDatafile();
@@ -17,7 +17,6 @@ namespace Cosmos::Agenda
 
     void MainWidget::LoadNotesFromDatafile()
     {
-        // not a valid datafile, not loading anything
         if (!mNotesDF.Exists("NotesIndex/Count")) {
             return;
         }
@@ -27,7 +26,6 @@ namespace Cosmos::Agenda
 
         for (int dateIdx = 1; dateIdx <= dateCount; dateIdx++)
         {
-            // get the date key from the index
             std::string indexPath = "NotesIndex/" + std::to_string(dateIdx);
             if (!mNotesDF.Exists(indexPath)) {
                 continue;
@@ -35,7 +33,6 @@ namespace Cosmos::Agenda
 
             std::string dateKey = mNotesDF[indexPath].GetString();
 
-            // check if the date data exists
             std::string countPath = "Notes/" + dateKey + "/Count";
             if (!mNotesDF.Exists(countPath)) {
                 continue;
@@ -48,7 +45,7 @@ namespace Cosmos::Agenda
             size_t secondSep = dateKey.find("::", firstSep + 2);
 
             if (firstSep == std::string::npos || secondSep == std::string::npos) {
-                continue; // invalid key format
+                continue;
             }
 
             uint32_t year = std::stoi(dateKey.substr(0, firstSep));
@@ -58,8 +55,6 @@ namespace Cosmos::Agenda
 
             // calculate actual day of week
             Day dayOfWeek = calculate_day_of_week(year, month, dayNum);
-
-            // clear any existing notes for this date (in case of reload)
             mNotes[dateKey].clear();
 
             for (int i = 1; i <= count; i++)
@@ -67,7 +62,6 @@ namespace Cosmos::Agenda
                 std::string noteNumStr = std::to_string(i);
                 std::string noteBasePath = "Notes/" + dateKey + "/Notes/" + noteNumStr;
 
-                // check if the note text exists
                 std::string textPath = noteBasePath + "/Text";
                 if (!mNotesDF.Exists(textPath)) {
                     continue;
